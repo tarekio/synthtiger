@@ -5,9 +5,10 @@ MIT license
 """
 
 from synthtiger.components.corpus.base_corpus import BaseCorpus
+from synthtiger.components.corpus.second_base_corpus import SecondBaseCorpus
 from synthtiger.components.corpus.char_augmentable_corpus import CharAugmentableCorpus
 from synthtiger.components.corpus.length_augmentable_corpus import (
     LengthAugmentableCorpus,
 )
 
-__all__ = ["BaseCorpus", "CharAugmentableCorpus", "LengthAugmentableCorpus"]
+__all__ = ["BaseCorpus", "CharAugmentableCorpus", "LengthAugmentableCorpus", "SecondBaseCorpus"]
