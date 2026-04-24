@@ -3,7 +3,7 @@ SynthTIGER
 Copyright (c) 2021-present NAVER Corp.
 MIT license
 """
-
+import os
 import argparse
 import pprint
 import time
@@ -30,13 +30,26 @@ def run(args):
         verbose=args.verbose,
     )
 
+    existing_lines = 0
+
     if args.output is not None:
-        template.init_save(args.output)
+
+        gt_file = os.path.join(args.output, "gt.txt")
+        if os.path.exists(gt_file):
+            print(f"{gt_file} already exists. Checking length to avoid overwriting.")
+            
+            with open(gt_file, 'r', encoding='utf-8') as f:
+                existing_lines = sum(1 for _ in f)
+            print(f"{existing_lines} existing lines found. New data will start from index {existing_lines}.")
+            template.init_save(args.output, mode="a")
+        else:
+            template.init_save(args.output)
 
     for idx, (task_idx, data) in enumerate(generator):
         if args.output is not None:
+            task_idx = task_idx + existing_lines
             template.save(args.output, data, task_idx)
-        print(f"Generated {idx + 1} data (task {task_idx})")
+        print(f"Generated {idx + 1} data (file {task_idx})")
 
     if args.output is not None:
         template.end_save(args.output)

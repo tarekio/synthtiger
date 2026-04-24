@@ -34,7 +34,7 @@ def read_config(path):
 
 
 def generator(
-    path, name, config=None, count=None, worker=0, seed=None, retry=True, verbose=False
+    path, name, config=None, count=None, worker=0, seed=None, retry=False, verbose=False
 ):
     counter = range(count) if count is not None else itertools.count()
     tasks = _task_generator(seed)
@@ -60,7 +60,7 @@ def generator(
 
         for _ in counter:
             task_idx, task_seed = next(tasks)
-            data = _generate(template, task_seed, retry, verbose)
+            data = _generate(template, task_seed, retry, verbose, key=task_idx)
             yield task_idx, data
 
 
@@ -107,18 +107,25 @@ def _worker(path, name, config, task_queue, data_queue, retry, verbose):
 
     while True:
         task_idx, task_seed = task_queue.get()
-        data = _generate(template, task_seed, retry, verbose)
+        data = _generate(template, task_seed, retry, verbose, key=task_idx)
         data_queue.put((task_idx, data))
 
 
-def _generate(template, seed, retry, verbose):
+def _generate(template, seed, retry, verbose, key=None):
     states = get_global_random_states()
     set_global_random_seed(seed)
     data = None
 
+
+    # try:
+    #     data = template.generate(key)
+    # except:
+    #     if verbose:
+    #         print(f"{traceback.format_exc()}")
+
     while True:
         try:
-            data = template.generate()
+            data = template.generate(key)
         except:
             if verbose:
                 print(f"{traceback.format_exc()}")
