@@ -1,0 +1,202 @@
+coord_output: true
+
+vertical: false
+quality: [90, 100]
+visibility_check: true
+
+counts: [25, 100]
+
+corpus:
+  paths: [resources/corpus/corpus.txt]
+  weights: [1]
+  min_length: 1
+  max_length: 25
+  textcase: [lower]
+
+font:
+  paths: [resources/fonts]
+  weights: [1]
+  size: [40, 80]
+  bold: 0.5
+
+texture:
+  prob: 0.75
+  args:
+    paths: [resources/images_pics, resources/images_scan]
+    weights: [1, 1]
+    alpha: [0, 1]
+    grayscale: 0
+    crop: 0
+
+colormap2:
+  paths: [resources/colormap/scanned_paper_10k.txt]
+  weights: [1]
+  k: 2
+  alpha: [1, 1]
+  colorize: 0
+
+colormap3:
+  paths: [resources/colormap/scanned_paper_10k.txt]
+  weights: [1]
+  k: 3
+  alpha: [1, 1]
+  colorize: 0
+
+color:
+  gray: [0, 10]
+  alpha: [0.9, 1]
+  colorize: 0
+
+shape:
+  prob: 0.5
+  args:
+    weights: [1, 1]
+    args:
+      # elastic distortion
+      - alpha: [15, 30]
+        sigma: [4, 12]
+      # elastic distortion
+      - alpha: [0, 2]
+        sigma: [0, 0.6]
+
+layout:
+  length: [768, 1024]
+  space: [8, 12] # smaller
+  line_space: [2, 100] # smaller
+  # space: [10, 20] # larger
+  # line_space: [2, 250] # larger
+  # space: [20, 30] # very large
+  # line_space: [250, 400] # very large
+  align: [left, center, right, justify]
+  line_align: [middle]
+  ltr: true
+  ttb: true
+  vertical: false
+
+style:
+  prob: 0.7
+  args:
+    weights: [1, 2, 2]
+    args:
+      # text border
+      - size: [1, 2]
+        alpha: [0, 1]
+        grayscale: 0.5
+      # text shadow
+      - distance: [1, 1]
+        angle: [0, 360]
+        alpha: [0.1, 0.3]
+        grayscale: 0.2
+      # text extrusion
+      - length: [1, 1]
+        angle: [0, 360]
+        alpha: [0, 1]
+        grayscale: 0.1
+
+pad:
+  prob: 1
+  args:
+    pxs: [[100, 500], [100, 500], [100, 500], [100, 500]]
+    # pxs: [[50, 150], [50, 150], [50, 150], [50, 150]]
+
+postprocess:
+  args:
+    # gaussian noise
+    - prob: 0.7
+      args:
+        scale: [4, 8]
+        per_channel: 0
+    # gaussian blur
+    - prob: 0.7
+      args:
+        sigma: [0, 2]
+    # resample
+    - prob: 0.1
+      args:
+        size: [0.4, 0.4]
+    # median blur
+    - prob: 0.5
+      args:
+        k: [1, 1]
+
+
+# transform:
+#   prob: 0.5
+#   args:
+#     weights: [1, 1, 1, 1, 1, 1, 2]
+#     args:
+#       # perspective x
+#       - percents: [[0.5, 1], [1, 1]]
+#         aligns: [[0, 0], [0, 0]]
+#       # perspective y
+#       - percents: [[1, 1], [0.5, 1]]
+#         aligns: [[0, 0], [0, 0]]
+#       # trapezoidate x
+#       - weights: [1, 0, 1, 0]
+#         percent: [0.5, 1]
+#         align: [-1, 1]
+#       # trapezoidate y
+#       - weights: [0, 1, 0, 1]
+#         percent: [0.5, 1]
+#         align: [-1, 1]
+#       # skew x
+#       - weights: [1, 0]
+#         angle: [0, 30]
+#         ccw: 0.5
+#       # skew y
+#       - weights: [0, 1]
+#         angle: [0, 10]
+#         ccw: 0.5
+#       # rotate
+#       - angle: [0, 45]
+#         ccw: 0.5
+
+
+# mask_output: true
+# glyph_coord_output: true
+# glyph_mask_output: true
+
+# midground: 0.25
+# midground_offset:
+#   percents: [[-0.5, 0.5], [-0.5, 0.5]]
+# foreground_mask_pad: 5
+
+# corpus:
+#   weights: [1, 0]
+#   args:
+#     # length augmentable corpus
+#     # - paths: [fullfullfull.txt, fullfullfull.txt]
+#     - paths: [mother.txt, mother.txt]
+#       weights: [1, 1]
+#       min_length: 1
+#       max_length: 25
+#       textcase: [lower, upper, capitalize]
+#       augmentation: 0.1
+#       augmentation_length: [1, 2]
+#     # char augmentable corpus
+#     # - paths: []
+#     #   weights: []
+#     #   min_length: 1
+#     #   max_length: 25
+#     #   textcase: [lower, upper, capitalize]
+#     #   augmentation: 0
+#     #   augmentation_charset: resources/charset/alphanum_special.txt
+
+# color:
+#   rgb: [[0, 0], [0, 0], [0, 0]]
+#   alpha: [1, 1]
+#   grayscale: 0
+
+# layout:
+#   weights: [4, 1]
+#   args:
+#     # flow layout
+#     - space: [15, 25]
+#       length: [128, 2024]
+#       line_align: [right]
+#     # curve layout
+#     - curve: [20, 40]
+#       # length: [1024, 1024]
+#       space: [-2, 5]
+#       convex: 0.5
+#       upward: 0.5

@@ -1,0 +1,29 @@
+count: 1
+
+corpus:
+  paths: [resources/corpus/corpus.txt]
+  weights: [1]
+  min_length: 1
+  max_length: 25
+  textcase: [lower, upper, capitalize]
+
+font:
+  paths: [resources/fonts]
+  weights: [1]
+  size: [48, 48]
+  bold: 0
+
+color:
+  rgb: [[0, 10], [0, 10], [0, 10]]
+  alpha: [0.8, 1]
+  grayscale: 0
+
+layout:
+  length: [1024, 1024]
+  space: [0, 0]
+  line_space: [0, 0]
+  align: [center]
+  line_align: [middle]
+  ltr: true
+  ttb: true
+  vertical: false
