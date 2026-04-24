@@ -39,7 +39,7 @@ setup(
         "imgaug",
         "numpy",
         "opencv-python",
-        "pillow>=8.2.0",
+        "pillow==9.0.0",
         "pygame",
         "python-bidi",
         "pytweening",
