@@ -54,7 +54,7 @@ Once you're done, you can convert the generated data to the format docTR expects
 python tools/gt_to_json.py reco/gt.txt /path/to/dataset/
 ```
 
-# Detection
+### Detection
 
 To generate synthetic text images for detection task, run the following command.
 
