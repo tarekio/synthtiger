@@ -14,7 +14,7 @@ corpus:
   textcase: [lower]
 
 font:
-  paths: [resources/fonts]
+  paths: [resources/font]
   weights: [1]
   size: [40, 80]
   bold: 0.5
@@ -61,12 +61,12 @@ shape:
 
 layout:
   length: [768, 1024]
-  space: [8, 12] # smaller
+  # space: [8, 12] # smaller
   line_space: [2, 100] # smaller
-  # space: [10, 20] # larger
-  # line_space: [2, 250] # larger
-  # space: [20, 30] # very large
-  # line_space: [250, 400] # very large
+  space: [10, 20] # medium
+  # line_space: [2, 250] # medium
+  # space: [20, 30] # large
+  # line_space: [250, 400] # large
   align: [left, center, right, justify]
   line_align: [middle]
   ltr: true

@@ -8,7 +8,7 @@ corpus:
   textcase: [lower, upper, capitalize]
 
 font:
-  paths: [resources/fonts]
+  paths: [resources/font]
   weights: [1]
   size: [48, 48]
   bold: 0
