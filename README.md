@@ -1,3 +1,88 @@
+## Modified SynthTIGER for docTR
+
+This fork is intended to be used for generating synthetic text images for detection and recognition tasks, mainly to use with [docTR](https://github.com/mindee/doctr).
+
+List of changes compared to the original repository:
+
+- Updated the original code to be compatible with Python 3.10, pinned numpy and pillow versions to avoid compatibility issues.
+- Added new Corpus class that samples words deterministically from the corpus file.
+- Add new fit class that allows generation of multi-line text images with their corresponding polygon coordinates.
+- Used broadcasting to check for visibility, speeding up the generation process significantly.
+- Removed some blend modes that caused text to be invisible or hard to read.
+- Updated the templates and config files to generate text images suitable for training docTR models.
+- Added tools for cleaning Arabic corpus files and converting the generated data to the format docTR expects.
+- Uploaded some images for texture augmentation in detection task.
+
+Compatible with Python 3.10. Follow the next steps to set up the environment and install the library (don't install the library from PyPI or using the original repository instructions, install it from this source code):
+
+```
+git clone git@github.com:tarekio/synthtiger.git
+cd synthtiger
+python -m venv .venv # or python3.10 -m venv .venv 
+source .venv/bin/activate
+pip install . # or python3.10 -m pip install .
+```
+### Corpus
+
+You need to replace corpus file `resources/corpus/corpus.txt` with your own corpus file. The format of the corpus file is one word per line. You can get free corpora from [Leipzig Corpora Collection]{https://wortschatz-leipzig.de/en}. `tools/clean_arabic_sentences.py` and `tools/process_txt.py` can be used for cleaning and processing Arabic corpus files. Feel free to edit to suit your needs/language.
+
+### Fonts
+
+You should also add your own font files in `resources/font` directory, if needed. You can get free fonts from [Google Fonts](https://fonts.google.com/). Check the original readme below for more details on adding custom fonts.
+
+### Recognition
+
+To generate synthetic text images for recognition task, run the following command.
+
+```
+synthtiger -o reco -c 10 -w 2 -v templates/reco.py Reco templates/reco.yaml # c is the number of images to generate, w is the number of workers.
+```
+
+Check the template and config files for more details. The existing template will generate single word images, going through the corpus file line by line from the beginning. To change this behavior, you can edit the template file `templates/reco.py` and replace the corpus class with the original `BaseCorpus`.
+
+Another point to note is that the template doesn't apply any augmentation, it just generates clean text images. You can add augmentations in the template file if you want, or you can apply augmentations later in the training pipeline. 
+
+Here are examples of generated images for recognition task:
+
+<img src="assets/reco.png"/>
+
+The generated data will be saved in `reco` directory using the default structure outlined below.
+
+Once you're done, you can convert the generated data to the format docTR expects:
+
+```
+python tools/gt_to_json.py reco/gt.txt /path/to/dataset/
+```
+
+# Detection
+
+To generate synthetic text images for detection task, run the following command.
+
+```
+synthtiger -o detect -c 10 -w 2 -v templates/detect.py Detect templates/detect.yaml
+```
+
+Check the template and config files for more details. The existing template will generate multi-line text images, going through the corpus file randomly. The template will save polygon coordinates of each word, rather than each character as the original repository does. 
+
+The template applies texture augmentation and post-processing, but doesn't apply any transformation augmentation. You can add uncomment transforms in the template and config files if you want, or you can apply augmentations later in the training pipeline.
+
+The images will contain background textures from `resources/images_pics` directory, with the aim of generating realistic images of documents taken by mobile phones. You can change the texture images or add more texture images. You can also add scanned document images from `resources/images_scan` directory. Check FUNSD dataset for examples of scanned document images. 
+
+Here are examples of generated images for detection task with polygon annotations in green:
+
+<img src="assets/detect.png"/>
+
+The generated data will be saved in `detect` directory using the default structure outlined below. 
+
+`coords.txt` will contain file path, image size and polygon coordinates of each word in the generated images. 
+
+Once you're done, you can convert the generated data to the format docTR expects:
+
+```python tools/coord_to_json.py detect /path/to/dataset/```
+
+
+Below is the original readme from the repository, which contains more details on the usage of the library and how to customize it for your needs.
+
 <div align="center">
 
 # SynthTIGER 🐯 : Synthetic Text Image Generator
