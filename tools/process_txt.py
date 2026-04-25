@@ -3,21 +3,8 @@ import argparse
 import sys
 import os
 
-# vocab_str = """٠١٢٣٤٥٦٧٨٩ءابتثجحخدذرزسشصضطظعغفقكلمنهوي"""
+allowed_set = r"٠١٢٣٤٥٦٧٨٩ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىي؟؛«»—،%!#$&'()*+,-./:;<=>?@[\]^_`{|}~×÷“”‘’…"
 
-vocab_str = (
-        "0123456789"
-        "٠١٢٣٤٥٦٧٨٩"
-        "ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىي"
-        "ًٌٍَُِْ"             # Tashkeel
-        "؟؛«»—،%!"            # Arabic Punctuation
-        "#$%&'()*+,-./:;<=>?@[\]^_`{|}~"  # Symbols
-        "×÷“”‘’…"             # New requested symbols
-    )
-
-allowed_set = set(vocab_str)
-
-# 2. Mappings: Bad/Variant Char -> Good Char
 # Maps characters from your "Second List" to the "Target List".
 mappings = {
     # --- Explicit Removal ---
@@ -87,7 +74,6 @@ mappings = {
 }
 
 def clean_line(text):
-    # 1. The Allowed Vocabulary (Target List)
     # Includes: Standard Arabic, English, Numbers, Punctuation, and New Symbols (×÷“”‘’…)
     # Note: 'ـ' (Tatweel) is intentionally excluded.
     cleaned_chars = []
@@ -131,23 +117,15 @@ def process_files(input_files, output_file):
 
                     # The Arabic text is everything between the first and last column
                     raw_text = " ".join(parts[1:-1])
-                    # print(f"Raw line: '{raw_text}'") # Optional: uncomment for verbose output
 
-                    # 1. Normalize: Remove Tashkeel
+                    # Normalize: Remove Tashkeel
                     clean_text = clean_line(raw_text)
-                    # print(f"Cleaned line: '{clean_text}'") # Optional: uncomment for verbose output
 
-                    # 2. Clean: Replace punctuation with spaces
-                    # clean_text = re.sub(r'[^\w\s]', ' ', clean_text)
-
-                    # 3. Filter: Keep only Arabic words
+                    # Filter: Keep only Arabic words
                     words = clean_text.split()
                     for word in words:
-                        # print(f"Raw: '{word}'") # Optional: uncomment for verbose output
                         if len(word) < 20:
                             master_unique_words.add(word)
-                        # else:
-                        #     print(f"Filtered out: '{word}' file: {file_path} raw: '{raw_text}' cleaned: '{clean_text}'") # Optional: uncomment for verbose output
                             
             
             files_processed += 1

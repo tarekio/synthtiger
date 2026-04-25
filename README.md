@@ -4,14 +4,14 @@ This fork is intended to be used for generating synthetic text images for detect
 
 List of changes compared to the original repository:
 
-- Updated the original code to be compatible with Python 3.10, pinned numpy and pillow versions to avoid compatibility issues.
-- Added new Corpus class that samples words deterministically from the corpus file.
-- Add new fit class that allows generation of multi-line text images with their corresponding polygon coordinates.
-- Used broadcasting to check for visibility, speeding up the generation process significantly.
-- Removed some blend modes that caused text to be invisible or hard to read.
-- Updated the templates and config files to generate text images suitable for training docTR models.
-- Added tools for cleaning Arabic corpus files and converting the generated data to the format docTR expects.
-- Uploaded some images for texture augmentation in detection task.
+- Updated the original code for compatibility with Python 3.10 and fixed `numpy` and `pillow` versions to prevent dependency conflicts.
+- Implemented a new Corpus class to sample words deterministically from the prepared corpus file.
+- Developed a new Fit class to enable the generation of multi-line text images with associated polygon coordinates.
+- Utilised NumPy broadcasting to evaluate text visibility, significantly accelerating the generation process.
+- Removed specific blend modes that resulted in illegible or invisible rendered text.
+- New templates and configuration files to produce synthetic images tailored for docTR model training.
+- Integrated tools for cleaning Arabic corpus files and converting output data into the requisite docTR format.
+- Curated and uploaded additional texture images to enhance data augmentation for the text detection task.
 
 Compatible with Python 3.10. Follow the next steps to set up the environment and install the library (don't install the library from PyPI or using the original repository instructions, install it from this source code):
 

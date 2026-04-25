@@ -5,7 +5,6 @@ import os
 
 allowed_set = r"٠١٢٣٤٥٦٧٨٩ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىي؟؛«»—،%!#$&'()*+,-./:;<=>?@[\]^_`{|}~×÷“”‘’…"
 
-# 2. Mappings: Bad/Variant Char -> Good Char
 # Maps characters from your "Second List" to the "Target List".
 mappings = {
     # --- Explicit Removal ---
@@ -75,7 +74,6 @@ mappings = {
 }
 
 def clean_line(text, whitespace=False):
-    # 1. The Allowed Vocabulary (Target List)
     # Includes: Standard Arabic, English, Numbers, Punctuation, and New Symbols (×÷“”‘’…)
     # Note: 'ـ' (Tatweel) is intentionally excluded.
     cleaned_chars = []
@@ -124,13 +122,8 @@ def process_files(input_files, output_file, whitespace):
                             # spilt by whitespace
                             final_text = final_text.split()
                             for word in final_text:
-                                # print(f"Writing word: '{word}'")  # Optional: uncomment for verbose output
                                 if len(word) < 20:  # Optional: filter out very long "words"
                                     outfile.write(word + '\n')
-                                else:
-                                    print(f"Filtered out long word: '{word}' from file: {file_path} raw: '{raw_text}' cleaned: '{final_text}'") # Optional: uncomment for verbose output
-                            # outfile.write(final_text + '\n') # Original line writing (commented out for word-by-word writing)
-                            # outfile.write(final_text + '\n')
 
         print(f"✅ Success! Cleaned sentences saved to: {output_file}")
 
