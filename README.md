@@ -24,7 +24,7 @@ pip install . # or python3.10 -m pip install .
 ```
 ### Corpus
 
-You need to replace corpus file `resources/corpus/corpus.txt` with your own corpus file. The format of the corpus file is one word per line. You can get free corpora from [Leipzig Corpora Collection]{https://wortschatz-leipzig.de/en}. `tools/clean_arabic_sentences.py` and `tools/process_txt.py` can be used for cleaning and processing Arabic corpus files. Feel free to edit to suit your needs/language.
+You need to replace corpus file `resources/corpus/corpus.txt` with your own corpus file. The format of the corpus file is one word per line. You can get free corpora from [Leipzig Corpora Collection](https://wortschatz-leipzig.de/en). `tools/clean_arabic_sentences.py` and `tools/process_txt.py` can be used for cleaning and processing Arabic corpus files. Feel free to edit to suit your needs/language.
 
 ### Fonts
 
