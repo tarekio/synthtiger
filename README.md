@@ -1,13 +1,15 @@
 ## Modified SynthTIGER for docTR
 
-This fork is intended to be used for generating synthetic text images for detection and recognition tasks, mainly to use with [docTR](https://github.com/mindee/doctr).
+This fork is intended to be used for generating synthetic text images for detection and recognition tasks, mainly to use with [docTR](https://github.com/mindee/doctr). 
+
+The current templates are designed to generate synthetic text images for document tasks rather than other STR tasks.  
 
 List of changes compared to the original repository:
 
 - Updated the original code for compatibility with Python 3.10 and fixed `numpy` and `pillow` versions to prevent dependency conflicts.
 - Implemented a new Corpus class to sample words deterministically from the prepared corpus file.
-- Developed a new Fit class to enable the generation of multi-line text images with associated polygon coordinates.
-- Utilised NumPy broadcasting to evaluate text visibility, significantly accelerating the generation process.
+- Developed a new Layout class to enable the generation of multi-line text images with associated polygon coordinates.
+- Refactoring visibility check to speed up the generation process.
 - Removed specific blend modes that resulted in illegible or invisible rendered text.
 - New templates and configuration files to produce synthetic images tailored for docTR model training.
 - Integrated tools for cleaning Arabic corpus files and converting output data into the requisite docTR format.
@@ -22,6 +24,7 @@ python -m venv .venv # or python3.10 -m venv .venv
 source .venv/bin/activate
 pip install . # or python3.10 -m pip install .
 ```
+
 ### Corpus
 
 You need to replace corpus file `resources/corpus/corpus.txt` with your own corpus file. The format of the corpus file is one word per line. You can get free corpora from [Leipzig Corpora Collection](https://wortschatz-leipzig.de/en). `tools/clean_arabic_sentences.py` and `tools/process_txt.py` can be used for cleaning and processing Arabic corpus files. Feel free to edit to suit your needs/language.
